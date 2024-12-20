@@ -1,0 +1,21 @@
+{
+	"name": "@scr2em/vcard",
+	"version": "0.0.1",
+	"description": "A simple vCard builder",
+	"main": "build/index.js",
+	"keywords": [
+		"vcard",
+		"vcf"
+	],
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Mohamed M. Abdelgwad",
+	"license": "ISC",
+	"dependencies": {
+		"typescript": "^5.7.2"
+	},
+	"devDependencies": {
+		"prettier": "^3.4.2"
+	}
+}
