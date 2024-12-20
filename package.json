@@ -1,8 +1,9 @@
 {
 	"name": "@scr2em/vcard",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "A simple vCard builder",
 	"main": "build/index.js",
+	"types": "build/index.d.ts",
 	"keywords": [
 		"vcard",
 		"vcf"
