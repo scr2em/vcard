@@ -23,11 +23,10 @@ export class VCard {
 		const vCard = new VCard();
 		const lines = vCardString.split(/\r?\n/).filter(line => line.trim());
 		
-		// Clear the default properties first
-		vCard.singleProps.clear();
-		
 		// Track the highest custom index used
 		let maxCustomIndex = 0;
+		let hasBegin = false;
+		let hasVersion = false;
 		
 		for (const line of lines) {
 			const colonIndex = line.indexOf(':');
@@ -35,6 +34,10 @@ export class VCard {
 			
 			const propertyPart = line.substring(0, colonIndex);
 			const value = line.substring(colonIndex + 1);
+			
+			// Track if we found BEGIN and VERSION
+			if (propertyPart === 'BEGIN') hasBegin = true;
+			if (propertyPart === 'VERSION') hasVersion = true;
 			
 			// Extract item prefix if present (e.g., "item1.X-ABLABEL" -> "item1")
 			const itemMatch = propertyPart.match(/^item(\d+)\./);
@@ -44,6 +47,14 @@ export class VCard {
 			}
 			
 			vCard.singleProps.set(propertyPart, value);
+		}
+		
+		// Ensure BEGIN and VERSION are always present
+		if (!hasBegin) {
+			vCard.singleProps.set("BEGIN", "VCARD");
+		}
+		if (!hasVersion) {
+			vCard.singleProps.set("VERSION", "3.0");
 		}
 		
 		// Set the custom index to be one more than the highest found
