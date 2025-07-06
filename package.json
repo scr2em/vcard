@@ -12,14 +12,15 @@
 	"scripts": {
 		"build": "tsc",
 		"prepare": "npm run build",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "vitest"
 	},
 	"author": "Mohamed M. Abdelgwad",
 	"license": "MIT",
 	"devDependencies": {
 		"prettier": "^3.4.2",
-		"typescript": "^5.7.2"
+		"typescript": "^5.7.2",
+		"vitest": "^3.2.4"
 	},
 	"homepage": "https://github.com/scr2em/vcard#readme",
-	"repository":"https://github.com/scr2em/vcard"
+	"repository": "https://github.com/scr2em/vcard"
 }

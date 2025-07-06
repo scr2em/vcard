@@ -15,6 +15,44 @@ export class VCard {
 	private customIndex: number = 1;
 
 	/**
+	 * Creates a VCard instance from a vCard string.
+	 * @param vCardString - The vCard data as a string
+	 * @returns A new VCard instance populated with the parsed data
+	 */
+	public static from(vCardString: string): VCard {
+		const vCard = new VCard();
+		const lines = vCardString.split(/\r?\n/).filter(line => line.trim());
+		
+		// Clear the default properties first
+		vCard.singleProps.clear();
+		
+		// Track the highest custom index used
+		let maxCustomIndex = 0;
+		
+		for (const line of lines) {
+			const colonIndex = line.indexOf(':');
+			if (colonIndex === -1) continue;
+			
+			const propertyPart = line.substring(0, colonIndex);
+			const value = line.substring(colonIndex + 1);
+			
+			// Extract item prefix if present (e.g., "item1.X-ABLABEL" -> "item1")
+			const itemMatch = propertyPart.match(/^item(\d+)\./);
+			if (itemMatch) {
+				const itemNumber = parseInt(itemMatch[1], 10);
+				maxCustomIndex = Math.max(maxCustomIndex, itemNumber);
+			}
+			
+			vCard.singleProps.set(propertyPart, value);
+		}
+		
+		// Set the custom index to be one more than the highest found
+		vCard.customIndex = maxCustomIndex + 1;
+		
+		return vCard;
+	}
+
+	/**
 	 * Creates a new VCard instance initialized with BEGIN and VERSION properties.
 	 */
 	constructor() {
